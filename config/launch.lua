@@ -1,38 +1,38 @@
 local platform = require('utils.platform')
+local wezterm = require("wezterm")
 
-local options = {
-   default_prog = {},
-   launch_menu = {},
-}
+local default_prog
+local launch_menu
 
 if platform.is_win then
-   options.default_prog = { "C:/Program Files/Git/bin/bash.exe", "--login", "-i" }
-   options.launch_menu = {
+   launch_menu = {
+      { label = 'Git Bash', args = { "C:/Program Files/Git/bin/bash.exe", "--login", "-i" }, },
       { label = 'PowerShell Core', args = { 'pwsh', '-NoLogo' } },
       { label = 'PowerShell Desktop', args = { 'powershell' } },
       { label = 'Command Prompt', args = { 'cmd' } },
       { label = 'Nushell', args = { 'nu' } },
       { label = 'Msys2', args = { 'ucrt64.cmd' } },
-      {
-         label = 'Git Bash',
-         args = { "C:/Program Files/Git/bin/bash.exe", "--login", "-i" },
-      },
    }
 elseif platform.is_mac then
-   options.default_prog = { '/opt/homebrew/bin/fish', '-l' }
-   options.launch_menu = {
+   launch_menu = {
+      { label = 'Zsh', args = { 'zsh', '-l' } },
       { label = 'Bash', args = { 'bash', '-l' } },
       { label = 'Fish', args = { '/opt/homebrew/bin/fish', '-l' } },
       { label = 'Nushell', args = { '/opt/homebrew/bin/nu', '-l' } },
-      { label = 'Zsh', args = { 'zsh', '-l' } },
    }
 elseif platform.is_linux then
-   options.default_prog = { 'fish', '-l' }
-   options.launch_menu = {
+   launch_menu = {
       { label = 'Bash', args = { 'bash', '-l' } },
       { label = 'Fish', args = { 'fish', '-l' } },
       { label = 'Zsh', args = { 'zsh', '-l' } },
    }
 end
 
-return options
+if launch_menu then
+   default_prog = default_prog or launch_menu[1].args
+end
+
+return {
+   default_prog = default_prog,
+   launch_menu = launch_menu,
+}

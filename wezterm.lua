@@ -13,7 +13,7 @@ require('events.tab-title').setup({
    show_progress = true,
 })
 require('events.new-tab-button').setup()
-require('events.gui-startup').setup()
+-- require('events.gui-startup').setup()
 
 return Config:init()
    :append(require('config.appearance'))

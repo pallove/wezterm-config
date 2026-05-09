@@ -71,4 +71,7 @@ return {
       fade_out_duration_ms = 250,
       target = 'CursorColor',
    },
+
+  initial_cols = 150,
+  initial_rows = 40,
 }
